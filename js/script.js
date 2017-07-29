@@ -6,8 +6,9 @@ $(document).ready(function(){
     var searchField = $("#query");    // polje vnosa iskanja
     var icon = $("#search-btn");      // gumb iskanja
 
-/*    var q;
-    var token;
+   var q;
+   var token;
+/* 
     var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=web+design&pageToken=&type=video&key=AIzaSyCVpipS9I-mV0f1v8SiIb_vP78mCHfvxqU";
 */
     
@@ -41,7 +42,7 @@ $(document).ready(function(){
 
     
 // search function
-function search() {
+function search(token, q) {
     // Clear Results
     $("#results").html("");
     $("#buttons").html("");
@@ -54,6 +55,7 @@ function search() {
         "https://www.googleapis.com/youtube/v3/search",{
             part: "snippet, id",
             q: q,
+            pageToken: token,
             type: "video",
             key: "AIzaSyCVpipS9I-mV0f1v8SiIb_vP78mCHfvxqU"
         },
@@ -71,9 +73,38 @@ function search() {
                     // display results
                     $("#results").append(output);
                 });
+              
+              // Buttons for prev and next
+              var buttons = getButtons(prevPageToken, nextPageToken);
+              
+              // Display Buttons
+              $("#buttons").append(buttons);
+              
             }
     ); // end get
 }  // end of search function  
+
+ 
+// prev page
+function prevPage() {
+	var token = $('#prev-button').data('token');
+	var q = $('#prev-button').data('query');
+	// above does not exist in HTML; is written by getButtons() below
+	search(token, q);
+}
+
+// next page
+function nextPage() {
+	var token = $('#next-button').data('token');
+	var q = $('#next-button').data('query');
+	// above does not exist in HTML; is written by getButtons() below
+	search(token, q);
+}
+
+    
+    
+    
+    
     
 // Build Output
     function getOutput(item) {
@@ -98,11 +129,57 @@ function search() {
             '<div class="clearfix"></div>' +
             '';
         
-        return output;
-        
-            
+        return output;                  
     }
+    
+/*    // Build the buttons 16:35
+    function getButtons(prevPageToken, nextPageToken){
+        if(!prevPageToken) {
+            var btnoutput = '<div class="button-container">' +
+                '<button id="next-button" class="btn btn-outline-danger paging-button" data-token="' + nextPageToken + '" data-query="' + q + '" ' +
+                ' onclick = "nextPage()">Next Page</button></div>';
+        } else {
+            var btnoutput = '<div class="button-container">' +
+                '<button id="prev-button" class="btn btn-outline-danger paging-button" data-token="' + prevPageToken + '" data-query="' + q + '" ' +
+                ' onclick = "prevPage()">Prev Page</button></div>';
+            
+                '<button id="next-button" class="btn btn-outline-danger paging-button" data-token="' + nextPageToken + '" data-query="' + q + '" ' +
+                ' onclick = "nextPage()">Next Page</button></div>';         
+        }
+        
+        return btnoutput;
+    }*/
+
+
+    
+// build the buttons to be displayed in our HTML
+// I also rewrote this function to get rid of redundancy
+function getButtons(prevPageToken, nextPageToken, q) {
+	var prevButton = '<button id="prev-button" class="paging-button btn btn-outline-danger"' +
+	' data-token="' +prevPageToken+ '" data-query="' +q+ '"' +
+	' onclick="prevPage();">Prev Page</button>';
+
+	var nextButton = '<button id="next-button" class="paging-button btn btn-outline-danger"' +
+	' data-token="' +nextPageToken+ '" data-query="' +q+ '"' +
+	' onclick="nextPage();">Next Page</button>';
+
+	if(!prevPageToken){
+		var buttonOutput = '<div class="button-container">' +
+		nextButton + '</div>';
+		// probably should add if-not-nextPageToken but not going to
+		// they might go on forever anyway
+	} else {
+		var buttonOutput = '<div class="button-container">' +
+		prevButton + ' ' +nextButton+ '</div>';
+	}
+	
+	return buttonOutput;
+}
+
+
 
     
 }) /* end ready*/
+
+/* video 16 / 6:00 lightBox */
 

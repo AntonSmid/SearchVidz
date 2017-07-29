@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <title>SearchVidz</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/jquery.fancybox.css" media="screen">
     <link rel="stylesheet" href="css/style.css">
-    
-    
     
 </head>
 <body>
@@ -18,18 +15,17 @@
       </header>
       
       <section>
-          <form id="search-form" name="search-form" onsubmit="return search('','')">
-<!-- NOTE: I'm passing in empty values because the paging buttons use 
-     the same function in my JS. This is different from the tutorial. -->
-	<div class="fieldcontainer">
-		<input type="search" id="query" class="search-field" placeholder="Search YouTube"> 
-		<input type="submit" name="searchbutton" id="searchbutton" value="">
-		<!-- button has no text (value) because it is an image, via CSS -->
-	</div>
-</form>
+          <form id="search-form" name="search-form" onsubmit="return">
+              <div class="fieldcontainer">
+                  <input type="search" id="query" class="search-field" placeholder="Search YouTube...">
+                  <input type="submit" name="search-btn" id="search-btn"  value="">
+                  
+              </div>
+              
+          </form>
           
           <ul id="results"></ul>
-          <div id="buttons" style="text-align: center"></div>
+          <div id="buttons"></div>
           
       </section>
       <footer>
@@ -42,16 +38,9 @@
  
 <!-- scripts  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"> </script>
-<script src="js/jquery.fancybox.pack.js"></script>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="js/script.js"></script>  -->
-<script src="js/new.js"></script>  
-  
-   <script>
-	$(document).ready(function() {
-		$('.fancybox').fancybox();
-	});
-    </script>
+<script src="new.js"></script>  
     
 </body>
 </html>
